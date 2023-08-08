@@ -1296,7 +1296,7 @@ static MQTTStatus_t receiveSingleIteration( MQTTContext_t * pContext,
 
     status = MQTT_GetIncomingPacketTypeAndLength( pContext->transportInterface.recv,
                                                   pContext->transportInterface.pNetworkContext,
-                                                  &incomingPacket );
+                                                  &incomingPacket, true );
 
     if( status == MQTTNoDataAvailable )
     {
@@ -1478,7 +1478,7 @@ static MQTTStatus_t receiveConnack( const MQTTContext_t * pContext,
          * receive of packet type and length. */
         status = MQTT_GetIncomingPacketTypeAndLength( pContext->transportInterface.recv,
                                                       pContext->transportInterface.pNetworkContext,
-                                                      pIncomingPacket );
+                                                      pIncomingPacket, false );
 
         /* The loop times out based on 2 conditions.
          * 1. If timeoutMs is greater than 0:

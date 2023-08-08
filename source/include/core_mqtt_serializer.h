@@ -1168,7 +1168,8 @@ MQTTStatus_t MQTT_DeserializeAck( const MQTTPacketInfo_t * pIncomingPacket,
 /* @[declare_mqtt_getincomingpackettypeandlength] */
 MQTTStatus_t MQTT_GetIncomingPacketTypeAndLength( TransportRecv_t readFunc,
                                                   NetworkContext_t * pNetworkContext,
-                                                  MQTTPacketInfo_t * pIncomingPacket );
+                                                  MQTTPacketInfo_t * pIncomingPacket,
+                                                  bool do_polling_read);
 /* @[declare_mqtt_getincomingpackettypeandlength] */
 
 #endif /* ifndef CORE_MQTT_SERIALIZER_H */

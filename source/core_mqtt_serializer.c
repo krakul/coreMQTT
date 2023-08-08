@@ -2343,7 +2343,8 @@ MQTTStatus_t MQTT_DeserializeAck( const MQTTPacketInfo_t * pIncomingPacket,
 
 MQTTStatus_t MQTT_GetIncomingPacketTypeAndLength( TransportRecv_t readFunc,
                                                   NetworkContext_t * pNetworkContext,
-                                                  MQTTPacketInfo_t * pIncomingPacket )
+                                                  MQTTPacketInfo_t * pIncomingPacket,
+                                                  bool do_polling_read)
 {
     MQTTStatus_t status = MQTTSuccess;
     int32_t bytesReceived = 0;
@@ -2355,10 +2356,14 @@ MQTTStatus_t MQTT_GetIncomingPacketTypeAndLength( TransportRecv_t readFunc,
     }
     else
     {
-        /* Read a single byte. */
+        int bytes_to_read = 1;
+        if (do_polling_read) {
+            bytes_to_read = 0;
+        }
+        /* Read 0 bytes aka send a polling read */
         bytesReceived = readFunc( pNetworkContext,
                                   &( pIncomingPacket->type ),
-                                  1U );
+                                  bytes_to_read );
     }
 
     if( bytesReceived == 1 )
